@@ -1,34 +1,39 @@
 import time
-import threading
 from core.master_brain import MasterBrain
 from drivers.internal_genius import InternalScholar
 from drivers.sensors import SovereigntyLedger
 
-def run_telemetry_heartbeat(ledger):
-    """Execution: 1-second Interval"""
-    while True:
-        # Get coordinates from R_lambda verification
-        coords = [18.4241, -34.0322, 10.5] 
-        ledger.heartbeat(coords, resonance_truth=True)
-        time.sleep(1)
-
-def run_scholar_cycle(scholar, brain):
-    """Execution: 40-second Interval"""
-    while True:
-        # 40s Topographical and Scientific Assessment
-        findings = scholar.perform_study()
-        
-        # Relay priorities to Groq for Deterministic Overdrive
-        brain.relay_priority_diagnostic(findings)
-        
-        time.sleep(40)
-
-if __name__ == "__main__":
-    # Initialize Sovereignty Layers
+def start_mission():
+    # Setup
     brain = MasterBrain(api_key="GROQ_KEY")
     scholar = InternalScholar()
     ledger = SovereigntyLedger()
+    
+    last_study_time = time.time()
+    
+    print("🚀 CELSIUS-UESP SOVEREIGNTY: MISSION START")
 
-    # Launch Synchronized Threads
-    threading.Thread(target=run_telemetry_heartbeat, args=(ledger,)).start()
-    threading.Thread(target=run_scholar_cycle, args=(scholar, brain)).start()
+    while True:
+        # 1. PER SECOND: Heartbeat & Coordinates
+        # (lat, long, alt) derived from Spectral Resonance Truth
+        current_coords = [18.42, -34.03, 10.5] 
+        ledger.heartbeat(current_coords, resonance=True)
+        
+        # 2. ADO TECHNICIAN: Check for Anomaly
+        # Example: Lidar jitter detected
+        sample_anomaly = {"sensor": "lidar", "data": "noise_detected"}
+        ado_report = brain.execute_ado_technician_protocol(
+            sample_anomaly['sensor'], 
+            sample_anomaly['data']
+        )
+        
+        # 3. EVERY 40 SECONDS: Scholar Study & Snapshot
+        if time.time() - last_study_time >= 40:
+            snapshot = scholar.perform_40s_study(sample_anomaly, ado_report)
+            print(f"✍️ Journalist: Snapshot saved - {snapshot['header']}")
+            last_study_time = time.time()
+            
+        time.sleep(1)
+
+if __name__ == "__main__":
+    start_mission()
