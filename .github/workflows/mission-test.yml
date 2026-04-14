@@ -1,24 +1,23 @@
-name: UESP-PRCE Mission Integrity Test
-on: [push]
+name: Mars Sovereign Mission
+on:
+  workflow_dispatch: # Allows manual trigger from Actions tab
 
 jobs:
-  diagnostic-check:
+  run-rover:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
+
       - name: Install Dependencies
-        run: |
-          pip install -r requirements.txt
-      - name: Validate Sovereignty Stack
-        run: |
-          # Test if the Groq Master Brain and Scholar LLM initialize
-          python -c "from core.master_brain import MasterBrain; from drivers.internal_genius import InternalScholar; print('🛡️ APEX STACK VERIFIED')"
-      - name: Validate Sovereignty Stack
-        run: |
-          # Set PYTHONPATH so Python can find the 'drivers' and 'core' folders
-          export PYTHONPATH=$PYTHONPATH:$(pwd)
-          python3 -c "from core.master_brain import MasterBrain; from drivers.internal_genius import InternalScholar; print('🛡️ APEX STACK VERIFIED')"
+        run: pip install groq numpy
+
+      - name: Execute Mission
+        env:
+          GROQ_SECRET: ${{ secrets.GROQ_SECRET }} # Set this in GitHub Secrets
+        run: python main.py
