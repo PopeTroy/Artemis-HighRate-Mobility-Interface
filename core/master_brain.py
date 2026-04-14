@@ -7,22 +7,24 @@ class MasterBrain:
         self.client = Groq(api_key=api_key)
         self.model = "llama-3.3-70b-versatile"
 
-    def analyze_terrain_and_physics(self, sensor_data, image_meta):
-        """
-        Solves: Unified Grand Prophetic Equation & Dimensional Overwrite.
-        Analyzes: Metallurgy, Gemology, and Solar Potential.
-        """
+    def execute_quantum_analysis(self, telemetry, image_data):
+        """Live Groq calculation for Dimensional Overwrite and Metallurgy."""
         prompt = f"""
-        ROLES: Scientist, Geologist, Quantum Physicist.
-        DATA: {sensor_data} | IMAGE_META: {image_meta}
-        TASKS:
-        1. Calculate the Unified Grand Prophetic Equation (Psi_G).
-        2. Apply Law of Dimensional Overwrite (D_O) to verify terrain stability.
-        3. Analyze for: Stoichiometry, Metallurgy (Iron/Magnesium), and Gemology.
-        4. Evaluate Horticulture/Agriculture potential in Regolith.
-        5. Recommend Solar Farm placement based on Artemis camera imagery.
-        6. Commands: Speed up, Slow down, or Stop based on D_O results.
-        RETURN: JSON with keys [equations, study_report, navigation_commands, location_id]
+        ACT AS: Chief Scientist.
+        INPUT: {telemetry} | IMAGE_DATA: {image_data}
+        EQUATIONS TO SOLVE: 
+        1. Unified Grand Prophetic Equation (Psi_G).
+        2. Apex Dimensional Overwrite (ADO) Law.
+        3. Law of Dimensional Overwrite (Manual Override).
+        
+        STUDY PARAMETERS: 
+        Stoichiometry, Metallurgy, Gemology, Meteorology, and Solar Farming potential.
+        
+        TASK:
+        Determine if current terrain supports 'Building Location' status.
+        Translate math into rover velocity (v) commands.
+        
+        RETURN: JSON with [psi_g_val, ado_result, nav_cmd, mineral_profile, solar_yield]
         """
         response = self.client.chat.completions.create(
             messages=[{"role": "user", "content": prompt}],
