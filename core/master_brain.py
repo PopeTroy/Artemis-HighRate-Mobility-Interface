@@ -1,87 +1,32 @@
-import numpy as np
-import time
+import os
+import json
+from groq import Groq
 
 class MasterBrain:
     def __init__(self, api_key):
-        self.api_key = api_key
-        self.retry_limit = 3
-        
-        # Hardware Health Mapping: 1.0 = Aligned | 0.0 = Severed
-        self.health_map = {"lidar": 1.0, "swir": 1.0, "rgb": 1.0, "pressure": 1.0}
-        
-        # Psi(t) Weights: Priority on SWIR for Martian Mineralogy
-        self.weights = {"swir": 0.85, "lidar": 0.10, "rgb": 0.05}
+        self.client = Groq(api_key=api_key)
+        self.model = "llama-3.3-70b-versatile"
 
-    def solve_spectral_resonance(self, live_data, ref_data):
+    def analyze_terrain_and_physics(self, sensor_data, image_meta):
         """
-        Calculates R_lambda(tau) = Integral[I_live * I_ref].
-        Determines the 'Ground Truth' resonance of the terrain.
+        Solves: Unified Grand Prophetic Equation & Dimensional Overwrite.
+        Analyzes: Metallurgy, Gemology, and Solar Potential.
         """
-        correlation = np.correlate(live_data, ref_data, mode='same')
-        resonance_peak = np.argmax(correlation)
-        # Normalized confidence score
-        confidence = np.max(correlation) / (np.sum(live_data) + 1e-9)
-        return resonance_peak, confidence
-
-    def calculate_psi_ground_truth(self, sensor_inputs):
+        prompt = f"""
+        ROLES: Scientist, Geologist, Quantum Physicist.
+        DATA: {sensor_data} | IMAGE_META: {image_meta}
+        TASKS:
+        1. Calculate the Unified Grand Prophetic Equation (Psi_G).
+        2. Apply Law of Dimensional Overwrite (D_O) to verify terrain stability.
+        3. Analyze for: Stoichiometry, Metallurgy (Iron/Magnesium), and Gemology.
+        4. Evaluate Horticulture/Agriculture potential in Regolith.
+        5. Recommend Solar Farm placement based on Artemis camera imagery.
+        6. Commands: Speed up, Slow down, or Stop based on D_O results.
+        RETURN: JSON with keys [equations, study_report, navigation_commands, location_id]
         """
-        Implements Psi(t) = wS*S + wL*L + wC*C.
-        Unifies disparate sensor data into a single 'Sovereign Reality' vector.
-        """
-        psi_t = (self.weights['swir'] * sensor_inputs.get('swir', 0) +
-                 self.weights['lidar'] * sensor_inputs.get('lidar', 0) +
-                 self.weights['rgb'] * sensor_inputs.get('rgb', 0))
-        return psi_t
-
-    def execute_ado_technician_protocol(self, sensor_id, live_telemetry, reference_truth):
-        """
-        The ADO Systematic Technician. 
-        Stress-tests hardware against NASA ground-truth thresholds.
-        """
-        resonance_peak, confidence = self.solve_spectral_resonance(live_telemetry, reference_truth)
-        
-        # If the math mismatches (Anomaly < 80% confidence), initiate the Stress-Test
-        if confidence < 0.80:
-            print(f"🛠️ ADO: {sensor_id} failed initial alignment. Initiating recursive fix...")
-            
-            for attempt in range(1, self.retry_limit + 1):
-                # Systematic Reset: Re-syncing clock cycles to 432Hz logic
-                success = self.simulate_systematic_resolve(sensor_id)
-                
-                if success:
-                    self.health_map[sensor_id] = 0.98
-                    return {"status": "RESOLVED", "sensor": sensor_id, "action": "RECALIBRATED"}
-            
-            # Exhaustion: Sensor is physically broken or decoupled from reality
-            self.health_map[sensor_id] = 0.0
-            return {"status": "HARDWARE_FAILURE", "sensor": sensor_id, "action": "REROUTE"}
-            
-        return {"status": "OPERATIONAL", "sensor": sensor_id, "action": "NONE"}
-
-    def simulate_systematic_resolve(self, sensor_id):
-        """Logic to overwrite sensor bias and align with Prophetic Equations."""
-        # Resets the sensor's internal bias register to 432Hz baseline
-        return True 
-
-    def verify_weather_validity(self, weather_json):
-        """
-        Implements InSight API 'validity_checks'.
-        Requires 18/24 hours of valid sensor data to authorize Urban Planning.
-        """
-        validity = weather_json.get("validity_checks", {})
-        sol_hours = validity.get("sol_hours_with_data", [])
-        
-        # Authorize only if the Martian day has sufficient temporal coverage
-        is_valid = len(sol_hours) >= 18
-        if not is_valid:
-            print("⚠️ ADO: Atmospheric data density insufficient for civil assessment.")
-        return is_valid
-
-    def verify_architectural_integrity(self, blueprint):
-        """Checks 10-min Urban Plan against Civil Engineering safety axioms."""
-        # Topography stability threshold for Sovereign Infrastructure
-        return True if blueprint.get('stability', 0) > 0.85 else False
-
-    def get_health_status(self):
-        """Returns the current hardware health map for the On-Board Journalist."""
-        return self.health_map
+        response = self.client.chat.completions.create(
+            messages=[{"role": "user", "content": prompt}],
+            model=self.model,
+            response_format={"type": "json_object"}
+        )
+        return json.loads(response.choices[0].message.content)
