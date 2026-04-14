@@ -5,49 +5,63 @@ class MasterBrain:
     def __init__(self, api_key):
         self.api_key = api_key
         self.retry_limit = 3
-        # Hardware Health Map: 1.0 is perfect, 0.0 is dead
+        # Hardware Health Mapping: 1.0 = Aligned | 0.0 = Severed
         self.health_map = {"lidar": 1.0, "swir": 1.0, "rgb": 1.0, "pressure": 1.0}
-
-    def solve_spectral_resonance(self, live, ref):
-        """
-        R_lambda(tau) = Integral[I_live * I_ref]
-        Precision localization for Deterministic Overdrive.
-        """
-        return np.argmax(np.correlate(live, ref, mode='same'))
-
-    def execute_ado_technician_protocol(self, sensor_id, anomaly_data):
-        """
-        The God-Mode logic gate. Stress-tests and attempts systematic 
-        resolution of hardware issues without manual input.
-        """
-        print(f"🛠️ ADO SENTINEL: Anomaly detected in {sensor_id}. Initiating Stress-Test...")
         
-        for attempt in range(1, self.retry_limit + 1):
-            print(f"🔄 Stress-Test Attempt {attempt}/{self.retry_limit}...")
-            
-            # 1. Systematic Logic Reset (Recalibrating to 432Hz Resonance)
-            # 2. Cross-Verification (Using secondary sensors to check 'truth')
-            success = self.simulate_software_fix(sensor_id, anomaly_data)
-            
-            if success:
-                print(f"✅ ADO RESOLVED: {sensor_id} recalibrated. Mission Sovereignty maintained.")
-                self.health_map[sensor_id] = 0.95 # Minor degradation recorded
-                return {"status": "RESOLVED", "sensor": sensor_id}
+        # Psi(t) Weights: Priority on SWIR for Martian Mineralogy
+        self.weights = {"swir": 0.85, "lidar": 0.10, "rgb": 0.05}
+
+    def solve_spectral_resonance(self, live_data, ref_data):
+        """
+        Calculates R_lambda(tau) = Integral[I_live * I_ref].
+        Determines the 'Ground Truth' resonance of the terrain.
+        """
+        correlation = np.correlate(live_data, ref_data, mode='same')
+        resonance_peak = np.argmax(correlation)
+        confidence = np.max(correlation) / (np.sum(live_data) + 1e-9)
+        return resonance_peak, confidence
+
+    def calculate_psi_ground_truth(self, sensor_inputs):
+        """
+        Implements Psi(t) = wS*S + wL*L + wC*C.
+        Unifies disparate sensor data into a single 'Sovereign Reality' vector.
+        """
+        psi_t = (self.weights['swir'] * sensor_inputs.get('swir', 0) +
+                 self.weights['lidar'] * sensor_inputs.get('lidar', 0) +
+                 self.weights['rgb'] * sensor_inputs.get('rgb', 0))
+        return psi_t
+
+    def execute_ado_technician_protocol(self, sensor_id, live_telemetry, reference_truth):
+        """
+        The ADO Systematic Technician. 
+        Stress-tests hardware and attempts to resolve issues without manual input.
+        """
+        _, confidence = self.solve_spectral_resonance(live_telemetry, reference_truth)
         
-        # All stress-tests failed. Confirm broken state.
-        self.health_map[sensor_id] = 0.0
-        return self.relay_broken_status(sensor_id)
+        # If the math mismatches (Anomaly), initiate the Stress-Test
+        if confidence < 0.80:
+            print(f"🛠️ ADO: {sensor_id} failed initial alignment. Initiating recursive fix...")
+            
+            for attempt in range(1, self.retry_limit + 1):
+                # 1. Systematic Reset: Re-syncing clock cycles to 432Hz
+                # 2. Cross-Verification: Comparing against Psi(t) vector
+                success = self.simulate_systematic_resolve(sensor_id)
+                
+                if success:
+                    self.health_map[sensor_id] = 0.98
+                    return {"status": "RESOLVED", "sensor": sensor_id, "action": "RECALIBRATED"}
+            
+            # 3. Exhaustion: Sensor is physically broken
+            self.health_map[sensor_id] = 0.0
+            return {"status": "HARDWARE_FAILURE", "sensor": sensor_id, "action": "REROUTE"}
+            
+        return {"status": "OPERATIONAL", "sensor": sensor_id, "action": "NONE"}
 
-    def simulate_software_fix(self, sensor_id, data):
-        """Internal logic to 'fix' data jitter or sensor noise."""
-        # Check if the error is deterministic or chaotic
-        return True if "noise" in data else False
+    def simulate_systematic_resolve(self, sensor_id):
+        """Logic to overwrite sensor bias and align with Prophetic Equations."""
+        # In a live environment, this resets the sensor's bias register
+        return True 
 
-    def relay_broken_status(self, sensor_id):
-        """Final output once a sensor is confirmed physically broken."""
-        print(f"⚠️ ADO CRITICAL: {sensor_id} is non-responsive. Rerouting via PRCE.")
-        return {
-            "status": "HARDWARE_FAILURE",
-            "sensor": sensor_id,
-            "action": "REROUTE_DATA_STREAM"
-        }
+    def verify_architectural_integrity(self, blueprint):
+        """Checks 10-min Urban Plan against Civil Engineering safety axioms."""
+        return True if blueprint['stability'] > 0.85 else False
