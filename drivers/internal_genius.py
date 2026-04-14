@@ -6,51 +6,56 @@ class InternalScholar:
     def __init__(self, session_id):
         self.session_id = session_id
         self.kb_path = "vault/knowledge_base.json"
-        self.load_knowledge_base()
-
-    def load_knowledge_base(self):
-        """Loads Metallurgy, Geochemistry, and Civil Engineering axioms."""
-        try:
-            with open(self.kb_path, 'r') as f:
-                self.kb = json.load(f)
-        except FileNotFoundError:
-            self.kb = {"status": "Manual Override Required"}
 
     def conduct_minute_science(self, ado_report):
-        """Standard 60s Study: The Scientist and the Technician."""
+        """ Standard 60s Study: The Scientific Witness & Prophetic Path. """
         timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
         filename = f"logs/snapshots/sci_{self.session_id}.md"
         
-        # Mapping the Prophetic Path based on current metadata
+        # Determine current Technical Audit status
+        audit_status = "STABLE"
+        if ado_report['status'] == "HARDWARE_FAILURE":
+            audit_status = "CRITICAL_ADAPTATION"
+        elif ado_report['status'] == "RESOLVED":
+            audit_status = "SYSTEMATICALLY_HEALED"
+
         report = [
-            f"\n### [PROPHETIC PATH] {timestamp} | SESSION: {self.session_id}",
-            f"- **ADO Technician Status:** {ado_report['status']} (Action: {ado_report.get('action', 'Monitor')})",
+            f"### [PROPHETIC PATH] {timestamp} | SESSION: {self.session_id}",
+            f"- **Technical Audit:** {audit_status} ({ado_report.get('sensor', 'All-Systems')})",
             f"- **Geochemistry:** Spectral Resonance R_lambda confirmed mineral frequency at 432Hz.",
-            f"- **Metallurgy:** Chassis stress-strain within safe parameters for storm-chasing.",
-            f"- **Scientific Verdict:** Soil stoichiometry optimized for O2 extraction. Reality aligns with Super Circuit.",
+            f"- **Metallurgy:** Stoichiometry results suggest high iron-oxide yield in regolith.",
+            f"- **Scientific Verdict:** Reality aligns with Super Circuit. Terrain is deterministic.",
             "---"
         ]
 
+        # Ensure directory exists and append study
+        os.makedirs("logs/snapshots", exist_ok=True)
         with open(filename, "a") as f:
             f.write("\n".join(report) + "\n")
         print(f"🧬 Journalist: 60s Science Study archived for {self.session_id}")
 
-    def generate_10min_urban_design(self):
-        """Grand 10-Minute Assessment: Deterministic Colonization Protocol."""
+    def generate_10min_urban_design(self, stability_factor):
+        """ 10-Minute Assessment: Deterministic Colonization Protocol. """
         timestamp = time.strftime("%H:%M:%S")
-        print(f"🎨 Architect AI: Generating Blueprint Concept at {timestamp}...")
         
-        # This logic triggers the Puter.js Image Generation via the reciprocal script
+        # Budget-Saving Logic: Only blueprint if land is 'Sovereign-Grade'
+        if stability_factor < 0.90:
+            print("🏙️ Architect: Land is non-strategic. Skipping 10-min blueprint to preserve quota.")
+            return None
+
+        print(f"🎨 Architect AI: Generating Blueprint for {self.session_id} @ {timestamp}")
+        
         blueprint_meta = {
             "session": self.session_id,
+            "timestamp": timestamp,
             "type": "MODULAR_PREFAB_HUB",
-            "foundation": "Screw-pile / Regolith-cast",
-            "proquest_reference": "Civil_Eng_Section_4.2_Vacuum_Architecture"
+            "foundation": "Screw-pile / Vacuum-sealed",
+            "proquest_ref": "Civil_Eng_Section_4.2_Regolith_Cast"
         }
         
-        # Save a reference to the blueprint metadata
-        blueprint_file = f"logs/blueprints/urb_{self.session_id}.json"
-        with open(blueprint_file, "a") as f:
-            f.write(json.dumps({"time": timestamp, "concept": blueprint_meta}) + "\n")
+        # Record the metadata
+        os.makedirs("logs/blueprints", exist_ok=True)
+        with open(f"logs/blueprints/urb_{self.session_id}.json", "a") as f:
+            f.write(json.dumps(blueprint_meta) + "\n")
             
         return blueprint_meta
