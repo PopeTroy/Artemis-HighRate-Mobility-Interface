@@ -1,0 +1,16 @@
+{
+  "chemistry": {
+    "periodic_table": "Full 1-118 Atomic Data",
+    "stoichiometry": "Enabled: Real-time reactant balancing for O2 extraction"
+  },
+  "infrastructural_engineering": {
+    "civil": ["Regolith mechanics", "Foundations", "Screw-pile logic"],
+    "architectural": ["Modular Prefab", "Containerized Solutions", "Vacuum Sealing"],
+    "city_planning": ["Lava tube integration", "Radial habitat expansion"]
+  },
+  "academic_index": {
+    "proquest_tags": ["Metallurgy", "Quantum Science", "Geochemistry", "Geology"],
+    "philosophy": ["Epistemological Verification", "Super Circuit Axioms"]
+  }
+}
+
