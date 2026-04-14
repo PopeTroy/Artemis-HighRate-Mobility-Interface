@@ -1,0 +1,11 @@
+{
+  "ado_thresholds": {
+    "spectral_mismatch": 0.15,
+    "storm_opacity_tau": 2.0,
+    "structural_stress_limit": 0.85
+  },
+  "prophetic_constants": {
+    "omega_weight": 0.98,
+    "super_circuit_frequency": "432Hz"
+  }
+}
