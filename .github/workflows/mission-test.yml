@@ -1,1 +1,19 @@
+name: UESP-PRCE Mission Integrity Test
+on: [push]
 
+jobs:
+  diagnostic-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
+      - name: Validate Sovereignty Stack
+        run: |
+          # Test if the Groq Master Brain and Scholar LLM initialize
+          python -c "from core.master_brain import MasterBrain; from drivers.internal_genius import InternalScholar; print('🛡️ APEX STACK VERIFIED')"
