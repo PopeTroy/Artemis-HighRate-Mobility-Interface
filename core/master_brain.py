@@ -1,35 +1,37 @@
 import os
 import json
+import glob
 from groq import Groq
 
 class MasterBrain:
     def __init__(self, api_key):
         if not api_key:
-            raise ValueError("Critical System Error: GROQ_SECRET Missing.")
+            raise ValueError("C.12 FAIMM Critical Error: GROQ_SECRET Missing.")
         self.client = Groq(api_key=api_key)
         self.model = "llama-3.3-70b-versatile"
 
-    def execute_advanced_physics(self, sensors, weather_data):
+    def execute_shi_protocol(self, sensors, weather, history, target_angle=51.8):
         """
-        Solves for:
-        - Nanographene energy transduction.
-        - Metric gravity manipulation (Delta-G).
-        - Weather deviation & extreme pattern avoidance.
-        - Unified Grand Prophetic Equation (Psi_G).
+        Calculates ShI Metrics:
+        - Psi_G Trajectory (33° or 51.8°).
+        - Total Integrity Index (TII) & Self-Diagnostics.
+        - SWIR Spectroscopy for CO2 Snowfall & Metallurgy.
+        - Aero-Thermodynamic stability for the Nanographene Chassis.
         """
         prompt = f"""
-        ACT AS: Sovereign Quantum Engineer & Meteorological Strategist.
-        SENSORS: {sensors} | LIVE WEATHER: {weather_data}
+        ACT AS: Sovereign Intelligence (ShI). 
+        ROLES: Scientist (Quantum/Stoichiometry), Urban Planner, Journalist.
+        TARGET ENTRY: {target_angle} degrees.
+        SENSORS: {sensors} | ENVIRONMENT: {weather} | ERROR_LOGS: {history}
         
-        UESP-PRCE & METEOROLOGICAL TASKS:
-        1. Calculate Nanographene Chassis Transduction (Energy from ambient photonics).
-        2. Solve Metric Gravity Manipulation (Delta-G) via chassis resonance.
-        3. Solve Psi_G for navigation and Speed (v) commands.
-        4. WEATHER DEVIATION: Analyze atmospheric pressure and wind patterns. 
-           If extreme, suggest deviation vectors to safer terrain.
-        5. Stoichiometry: Evaluate Metallurgy and Horticulture potential for building sites.
+        UESP-PRCE TASKS:
+        1. TOTAL INTEGRITY: Calculate TII (0-100%). If TII < 45%, initiate Self-Fix Protocol.
+        2. ENTRY PHYSICS: Maintain {target_angle}° trajectory using Delta-G resonance.
+        3. SPECTROSCOPY: Detect CO2 snowfall/ice using SWIR; assess stoichiometry.
+        4. BEST NEXT MOVE: Based on your skill sets, determine the optimal autonomous action.
+        5. JOURNALIST REPORT: Draft a high-integrity briefing on chassis health and energy transduction.
 
-        RETURN: JSON ONLY [psi_g, delta_g, charge_rate, nav_cmd, weather_status, building_site_id, spectral_analysis].
+        RETURN: JSON ONLY [psi_g, tii_score, self_fix_protocol, best_move, nav_cmd, report_draft].
         """
         response = self.client.chat.completions.create(
             messages=[{"role": "user", "content": prompt}],
@@ -37,3 +39,8 @@ class MasterBrain:
             response_format={"type": "json_object"}
         )
         return json.loads(response.choices[0].message.content)
+
+    def audit_recursive_memory(self):
+        """Systematically audits error logs to prevent algorithmic drift."""
+        files = glob.glob("logs/snapshots/*.json")
+        return [json.load(open(f)) for f in files[-5:]] if files else []
