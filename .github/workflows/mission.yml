@@ -16,7 +16,7 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install -r requirements.txt
-          # The -p flag ensures we don't crash if the directory is already in the tree
+          # Fix for "File exists" error
           mkdir -p logs/snapshots 
 
       - name: Deploy Sovereign Entity
