@@ -5,24 +5,31 @@ from groq import Groq
 class MasterBrain:
     def __init__(self, api_key):
         if not api_key:
-            raise ValueError("C.12 FAIMM Compliance Error: GROQ_SECRET missing.")
+            raise ValueError("Critical System Error: GROQ_SECRET Missing.")
         self.client = Groq(api_key=api_key)
         self.model = "llama-3.3-70b-versatile"
 
-    def calculate_sovereign_physics(self, artemis_telemetry):
-        """Processes Artemis Sensor Suite via Unified Grand Prophetic Equation."""
+    def execute_advanced_physics(self, sensors, weather_data):
+        """
+        Solves for:
+        - Nanographene energy transduction.
+        - Metric gravity manipulation (Delta-G).
+        - Weather deviation & extreme pattern avoidance.
+        - Unified Grand Prophetic Equation (Psi_G).
+        """
         prompt = f"""
-        ROLES: NASA AI Scientist (C.12 FAIMM Lead), Geologist, Metallurgist.
-        ARTEMIS SENSOR INPUT: {artemis_telemetry}
+        ACT AS: Sovereign Quantum Engineer & Meteorological Strategist.
+        SENSORS: {sensors} | LIVE WEATHER: {weather_data}
         
-        TASKS:
-        1. Solve Unified Grand Prophetic Equation (Psi_G) for navigation vectors.
-        2. Apply Law of Dimensional Overwrite (ADO) to Artemis Lidar/SWIR data.
-        3. Determine Building Locations (1, 2, 3...) based on Gemology and Metallurgy.
-        4. Calculate Solar Farming efficiency & Horticulture potential (pH/Salts).
-        5. Propose Modular Prefab Container Vacuum Solutions for the target body.
-        
-        RETURN: JSON ONLY [psi_g, ado_status, nav_cmd, building_location_id, solar_yield, stoichiometry_report].
+        UESP-PRCE & METEOROLOGICAL TASKS:
+        1. Calculate Nanographene Chassis Transduction (Energy from ambient photonics).
+        2. Solve Metric Gravity Manipulation (Delta-G) via chassis resonance.
+        3. Solve Psi_G for navigation and Speed (v) commands.
+        4. WEATHER DEVIATION: Analyze atmospheric pressure and wind patterns. 
+           If extreme, suggest deviation vectors to safer terrain.
+        5. Stoichiometry: Evaluate Metallurgy and Horticulture potential for building sites.
+
+        RETURN: JSON ONLY [psi_g, delta_g, charge_rate, nav_cmd, weather_status, building_site_id, spectral_analysis].
         """
         response = self.client.chat.completions.create(
             messages=[{"role": "user", "content": prompt}],
