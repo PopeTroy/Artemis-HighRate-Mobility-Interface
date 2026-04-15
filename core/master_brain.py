@@ -1,6 +1,7 @@
 import os
 import json
 import glob
+import httpx
 from groq import Groq
 
 class MasterBrain:
@@ -8,8 +9,11 @@ class MasterBrain:
         if not api_key:
             raise ValueError("C.12 FAIMM Compliance Error: GROQ_SECRET missing.")
         
-        # Initializing without explicit proxies to bypass the TypeError
-        self.client = Groq(api_key=api_key)
+        # Explicitly using an empty httpx client to bypass proxy auto-detection
+        self.client = Groq(
+            api_key=api_key,
+            http_client=httpx.Client() 
+        )
         self.model = "llama-3.3-70b-versatile"
 
     def execute_shi_protocol(self, sensors, weather, history, target_angle=51.8):
@@ -21,7 +25,7 @@ class MasterBrain:
         
         UESP-PRCE TASKS:
         1. Calculate Total Integrity Index (TII).
-        2. Assess CO2 snowfall stoichiometry and solar flux.
+        2. Assess CO2 snowfall stoichiometry.
         3. Determine Best Next Move for mission sovereignty.
         """
         response = self.client.chat.completions.create(
