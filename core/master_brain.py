@@ -7,22 +7,22 @@ class MasterBrain:
     def __init__(self, api_key):
         if not api_key:
             raise ValueError("C.12 FAIMM Compliance Error: GROQ_SECRET missing.")
-        # Standard initialization to prevent proxy argument errors
+        
+        # Initializing without explicit proxies to bypass the TypeError
         self.client = Groq(api_key=api_key)
         self.model = "llama-3.3-70b-versatile"
 
     def execute_shi_protocol(self, sensors, weather, history, target_angle=51.8):
-        """Unified union of Cloud (Groq) and Local (UESP) logic."""
         prompt = f"""
         ACT AS: Sovereign Intelligence (ShI). 
         ROLES: Scientist, Urban Planner, Journalist.
         TARGET ENTRY: {target_angle} degrees.
         SENSORS: {sensors} | ENVIRONMENT: {weather} | ERROR_LOGS: {history}
         
-        UESP-PRCE PROTOCOLS:
-        1. TOTAL INTEGRITY (TII): If < 45%, trigger self-fix logic.
-        2. ATMOSPHERE: Handle CO2 snowfall and Extreme Sun.
-        3. BEST NEXT MOVE: Determine next autonomous move as a rover.
+        UESP-PRCE TASKS:
+        1. Calculate Total Integrity Index (TII).
+        2. Assess CO2 snowfall stoichiometry and solar flux.
+        3. Determine Best Next Move for mission sovereignty.
         """
         response = self.client.chat.completions.create(
             messages=[{"role": "user", "content": prompt}],
