@@ -9,13 +9,13 @@ class InternalScholar:
         os.makedirs(self.vault, exist_ok=True)
 
     def archive_sovereign_evolution(self, shi_output, telemetry):
-        """Archives trajectory, integrity, and journalistic reporting."""
+        """Archives trajectory, integrity, and journalistic reporting for the library."""
         report = {
             "session": self.session_id,
             "timestamp": time.time(),
             "tii_score": shi_output.get("tii_score"),
             "diagnostics": shi_output.get("self_fix_protocol"),
-            "urban_planning": "Modular prefab container vacuum solutions mapped to terrain stoichiometry.",
+            "urban_planning": "Modular prefab vacuum solutions mapped to terrain stoichiometry.",
             "journalist_brief": shi_output.get("report_draft"),
             "chassis_status": "Nanographene UESP-PRCE Optimized"
         }
