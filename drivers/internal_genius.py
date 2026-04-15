@@ -6,7 +6,7 @@ class InternalScholar:
     def __init__(self, session_id):
         self.session_id = session_id
         self.vault = "logs/snapshots/"
-        # Fix for directory conflict: exist_ok=True ensures we don't crash if it exists
+        # Prevents "File Exists" exit code 1
         os.makedirs(self.vault, exist_ok=True)
 
     def archive_sovereign_evolution(self, shi_output, telemetry):
