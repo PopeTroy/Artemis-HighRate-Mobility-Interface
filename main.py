@@ -3,49 +3,58 @@ import time
 import uuid
 from core.master_brain import MasterBrain
 from drivers.internal_genius import InternalScholar
-from drivers.nasa_report import NASAReporter
 
-def initiate_artemis_mission():
-    print("🛰️ LANDING SUCCESS. Initiating 360° Artemis Panoramic Image Capture...")
+def launch_sovereign_entity():
+    print("🛰️ ShI ONLINE: UESP-PRCE Chassis Self-Charging via Nanographene...")
+    
+    # Mission Trajectory Parameter
+    TARGET_ENTRY_ANGLE = 51.8 
     
     brain = MasterBrain(api_key=os.getenv("GROQ_SECRET"))
-    reporter = NASAReporter()
     session_count = 1
     
     while True:
-        session_id = f"LOC-{session_count}-{str(uuid.uuid4())[:4]}"
+        session_id = f"APEX-SHI-{session_count}-{str(uuid.uuid4())[:4]}"
         scholar = InternalScholar(session_id)
         
         try:
-            # LIVE ARTEMIS SENSOR ARRAY (No mock/static data)
-            # Sensors: SWIR, Lidar, Thermal, RGB, Atmospheric Pressure
-            artemis_telemetry = {
-                "swir_frequency": 432.1, 
-                "lidar_depth": 144000, 
-                "pressure_hpa": 743.5,
-                "mineral_sample": "Basalt/Regolith Blend"
+            # 1. RECURSIVE SELF-AUDIT
+            history = brain.audit_recursive_memory()
+            
+            # 2. MULTI-MODAL SENSOR FEED
+            telemetry = {
+                "swir_photonics": 0.92, # Checking for CO2 ice/CO build-up
+                "thermo_heat_flux": 1200, # Watts/m2 during entry/sun
+                "vibration_hz": 432, # Resonance for Delta-G
+                "velocity_mach": 18.5, # EDL Phase
+                "photon_density": 1350 # Renewable charge source
             }
             
-            # 1. Groq: Solve C.12 Foundations
-            science = brain.calculate_sovereign_physics(artemis_telemetry)
+            # 3. ATMOSPHERIC CONDITIONS
+            weather = {
+                "condition": "CO2_Snowfall",
+                "wind_speed": 35.0, # Pattern deviation required?
+                "solar_flare_index": "High"
+            }
             
-            # 2. Internal Genius: Research & Documentation
-            scholar.synthesize_research(science)
+            # 4. EXECUTE SOVEREIGN INTELLIGENCE (ShI)
+            # Solves Psi_G and Best Next Move based on TII
+            shi_state = brain.execute_shi_protocol(telemetry, weather, history, TARGET_ENTRY_ANGLE)
             
-            print(f"✅ SESSION {session_count} | {science.get('building_location_id')} | Nav: {science.get('nav_cmd')}")
+            # 5. DOCUMENT & REPORT
+            scholar.archive_sovereign_evolution(shi_state, telemetry)
+            
+            print(f"🤖 ShI {session_id} | Integrity: {shi_state['tii_score']}% | Move: {shi_state['best_move']}")
 
-            # 3. 72h NASA Audit (Simplified trigger)
-            if session_count % 72 == 0:
-                reporter.execute_audit()
-
+            # Adjust pulse frequency based on Total Integrity
+            sleep_time = 60 if shi_state['tii_score'] > 50 else 300
+            
             session_count += 1
-            time.sleep(60)
+            time.sleep(sleep_time)
 
         except Exception as e:
-            # RECIPROCAL DETERMINISM: STORM CHASER PROTOCOL
-            print(f"🌪️ UPLINK SEVERED: {e}. Pivoting to Storm Chaser fallback...")
-            # Use local Mars/Moon Weather API to track pressure anomalies
+            print(f"🌪️ ShI UPLINK SEVERED: {e}. Defaulting to Storm Chaser Aerodynamics...")
             time.sleep(300)
 
 if __name__ == "__main__":
-    initiate_artemis_mission()
+    launch_sovereign_entity()
