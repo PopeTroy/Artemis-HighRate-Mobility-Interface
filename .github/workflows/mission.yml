@@ -16,7 +16,7 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install -r requirements.txt
-          # Fix for "File exists" error
+          # Fix for "File exists" error in Action Runner
           mkdir -p logs/snapshots 
 
       - name: Deploy Sovereign Entity
