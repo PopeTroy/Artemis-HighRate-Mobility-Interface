@@ -1,8 +1,8 @@
-name: Artemis Apex Resolve
+name: Artemis ShI Apex Mission
 on: [push, workflow_dispatch]
 
 jobs:
-  faimm-mission:
+  run-sovereign-shi:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -16,7 +16,7 @@ jobs:
       - name: Install Dependencies
         run: pip install -r requirements.txt
 
-      - name: Deploy Rover
+      - name: Deploy Sovereign Entity
         env:
           GROQ_SECRET: ${{ secrets.GROQ_SECRET }}
           PYTHONPATH: ${{ github.workspace }}
