@@ -9,8 +9,9 @@ def run_union_protocol():
     
     TARGET_ANGLE = 51.8 
     
-    # Authorize with GitHub Secret
-    brain = MasterBrain(api_key=os.getenv("GROQ_SECRET"))
+    # Initialize using GitHub Secrets
+    api_key = os.getenv("GROQ_SECRET")
+    brain = MasterBrain(api_key=api_key)
     session_count = 1
     
     while True:
@@ -19,19 +20,21 @@ def run_union_protocol():
         
         try:
             history = brain.audit_recursive_memory()
-            telemetry = {"vibration_hz": 432, "photon_density": 1350, "velocity_mach": 18.5}
+            telemetry = {"vibration_hz": 432, "velocity_mach": 18.5}
             weather = {"condition": "CO2_Snowfall", "wind_speed": 45.0}
             
+            # Execute Sovereign Decision
             shi_state = brain.execute_shi_protocol(telemetry, weather, history, TARGET_ANGLE)
             scholar.archive_sovereign_evolution(shi_state, telemetry)
             
-            print(f"🤖 {session_id} | TII: {shi_state['tii_score']}% | Decision: {shi_state['best_move']}")
+            print(f"🤖 {session_id} | TII: {shi_state['tii_score']}% | Move: {shi_state['best_move']}")
 
+            # Adaptive pulse
             time.sleep(60 if shi_state['tii_score'] > 50 else 300)
             session_count += 1
 
         except Exception as e:
-            print(f"🌪️ UNION DISRUPTED: {e}. Attempting Cloud Re-sync...")
+            print(f"🌪️ UNION DISRUPTED: {e}")
             time.sleep(300)
 
 if __name__ == "__main__":
