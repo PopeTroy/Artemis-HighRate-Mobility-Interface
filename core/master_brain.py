@@ -7,6 +7,7 @@ class MasterBrain:
     def __init__(self, api_key):
         if not api_key:
             raise ValueError("C.12 FAIMM Compliance Error: GROQ_SECRET missing.")
+        # Standard initialization to prevent proxy argument errors
         self.client = Groq(api_key=api_key)
         self.model = "llama-3.3-70b-versatile"
 
@@ -20,7 +21,7 @@ class MasterBrain:
         
         UESP-PRCE PROTOCOLS:
         1. TOTAL INTEGRITY (TII): If < 45%, trigger self-fix logic.
-        2. ATMOSPHERE: Handle CO2 snowfall and Extreme Sun via Delta-G manipulation.
+        2. ATMOSPHERE: Handle CO2 snowfall and Extreme Sun.
         3. BEST NEXT MOVE: Determine next autonomous move as a rover.
         """
         response = self.client.chat.completions.create(
