@@ -16,7 +16,8 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install -r requirements.txt
-          mkdir -p logs/snapshots  # The -p flag fixes the Exit Code 1
+          # The -p flag ensures we don't crash if the directory is already in the tree
+          mkdir -p logs/snapshots 
 
       - name: Deploy Sovereign Entity
         env:
