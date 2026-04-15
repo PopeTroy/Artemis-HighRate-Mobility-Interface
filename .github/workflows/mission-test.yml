@@ -14,9 +14,11 @@ jobs:
           python-version: '3.11'
 
       - name: Install Dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          mkdir -p logs/snapshots  # Critical for ShI log recall
 
-      - name: Deploy Sovereign Entity
+      - name: Deploy Sovereign AI
         env:
           GROQ_SECRET: ${{ secrets.GROQ_SECRET }}
           PYTHONPATH: ${{ github.workspace }}
