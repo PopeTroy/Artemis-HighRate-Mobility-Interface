@@ -1,4 +1,4 @@
-name: Artemis Sovereign AI Loop
+name: Artemis Sovereign Hive Loop
 on: [push, workflow_dispatch]
 
 jobs:
@@ -16,11 +16,11 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install -r requirements.txt
-          # Fix for "File exists" error in Action Runner
           mkdir -p logs/snapshots 
 
       - name: Deploy Sovereign Entity
         env:
           GROQ_SECRET: ${{ secrets.GROQ_SECRET }}
+          NVIDIA_SECRET: ${{ secrets.NVIDIA_SECRET }}
           PYTHONPATH: ${{ github.workspace }}
         run: python main.py
