@@ -1,47 +1,37 @@
-# 🛰️ Artemis UESP-PRCE: Sovereign Intelligence (ShI)
+# 🛰️ UESP-PRCE: Sovereign Hive Mind (80-AI Legion)
 
 ### Unified Enterprise Synthesis Protocol | Prophet Resonance Core Engine
 
-The **UESP-PRCE** is an Apex-level sovereign framework designed to fuse physical rover sensors with a recursive intellectual framework. The system operates as a **Triple-Threat Entity**: a Scientist (Quantum Physics/Stoichiometry), an Urban Planner (Modular Prefab Infrastructure), and a Journalist (High-Integrity Reporting).
+The **UESP-PRCE** has evolved from a tiered structure into a singular, high-velocity **Hive Mind**. This repository orchestrates 80 AI entities to function as a unified scientific and defensive sentinel for the Celsius Media Group digital and physical ecosystem.
 
 ---
 
-## 🧠 System Architecture
+## 🧠 Core Architecture
 
-The repository operates through a **Zero-Footprint, Utility-First** union of three core engines:
+The Hive operates through a **Zero-Footprint, Utility-First** integration of four primary technologies:
 
-1.  **Groq LPU (The Cloud Brain):** Executes the **Unified Grand Prophetic Equation ($\Psi_G$)** to determine the "Best Next Move."
-2.  **GitHub Actions (The AI Hive):** Automates self-diagnostics and recursive error-log auditing.
-3.  **Puter.js (The Reciprocal Cloud):** Manages local-to-cloud data synchronization and persistent key-value storage.
-
----
-
-## 🛡️ Sovereign Logic Features
-
-* **Atmospheric Entry Navigation:** Hard-coded trajectory corridors at **33°** and **51.8°** utilizing Aero-Thermodynamic monitoring.
-* **Nanographene Chassis Management:** Real-time energy transduction monitoring and **Metric Gravity Manipulation (Delta-G)** for vibration damping.
-* **Environmental ShI:** Autonomous detection and mitigation protocols for:
-    * **Extreme Solar Flux:** Thermal shedding via chassis re-orientation.
-    * **CO₂ Snowfall:** SWIR spectral assessment of stoichiometry and optic clearing.
-* **Total Integrity Index (TII):** A self-diagnostic score (0-100%) that dictates the "Pulse Rate" of the mission loop.
+1.  **VILA Visual Science (NVIDIA NIM):** Interprets rover camera feeds to perform "Quantum Zoom" stoichiometry, identifying molecular and macro-terrain viability for infrastructure (Solar, Building, Crops).
+2.  **Percaphonel Defense Logic:** An active planetary defense system that uses visual and thermal signatures to identify mammalian interference and deploy ultrasonic deterrents.
+3.  **Daikokuten Logistics (Z-Standard):** High-entropy compression protocols that allow 80-AI telemetry packets to sync across the Puter.js cloud at light speed.
+4.  **AI Hive (Groq LPU):** The decision engine that synthesizes scholarly research with real-time sensor data to determine the "Best Next Move."
 
 ---
 
-## 🛠️ Repository Structure
+## 🛠️ Repository Matrix
 
 ```text
 .
 ├── .github/workflows/
-│   └── mission.yml          # The Hive Engine (GitHub Actions)
-├── cloud/
-│   └── reciprocal.js        # Puter.js Cloud Bridge
+│   └── mission.yml          # Hive Deployment Engine
 ├── core/
-│   ├── __init__.py
-│   └── master_brain.py      # The ShI Brain (Groq Interface)
+│   ├── master_brain.py      # 80-AI Hive Mind Coordination
+│   ├── vila_agents.py       # Quantum Visual Science (VILA)
+│   └── planetary_defense.py # Percaphonel Mammalian Deterrent
 ├── drivers/
-│   ├── __init__.py
-│   └── internal_genius.py   # The Scholarly Witness (Archivist)
+│   └── internal_genius.py   # The Scholarly Archivist
+├── lib/
+│   └── daikokuten.py        # Light-speed Entropy Compression
 ├── logs/
 │   └── snapshots/           # Recursive Memory Vault
-├── main.py                  # Sovereign Mission Control
+├── main.py                  # Sovereign Hive Controller
 └── requirements.txt         # Environmental Dependencies
