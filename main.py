@@ -1,40 +1,40 @@
 import os
-import time
-from core.master_brain import MasterBrain
-from core.vila_agents import VilaVisualScholar
-from core.planetary_defense import PercaphonelDefense
-from lib.daikokuten import Daikokuten
+import json
+import glob
+import httpx
+from groq import Groq
 
-def run_sovereign_mission():
-    print("🛰️ ShI HIVE ONLINE: VILA Vision & Percaphonel Defense Active.")
-    
-    # Initialization
-    brain = MasterBrain(os.getenv("GROQ_SECRET"))
-    vision_scholar = VilaVisualScholar(nvidia_client=None) # Nvidia-backed VILA
-    defense = PercaphonelDefense()
-    
-    while True:
-        try:
-            # 1. Capture & Interpret Vision (VILA Logic)
-            # Simulated image capture
-            v_science = vision_scholar.interpret_vision(image_bytes=None, zoom_level="50x")
-            
-            # 2. Defense Assessment
-            p_defense = defense.execute_defense(v_science)
-            
-            # 3. Hive Mind Processing
-            decision = brain.execute_hive_protocol(v_science, p_defense)
-            
-            # 4. Daikokuten Logistics
-            compressed = Daikokuten.compress_for_logistics(decision)
-            
-            print(f"🤖 HIVE: Viability Solar [{v_science['viability_score']['solar_farming']}] | Defense: {p_defense['action']}")
-            
-            time.sleep(60) # High-frequency scan
+class MasterBrain:
+    def __init__(self, api_key):
+        if not api_key:
+            raise ValueError("C.12 FAIMM Compliance Error: GROQ_SECRET missing.")
+        
+        # Proxy-free initialization for GitHub Actions
+        self.client = Groq(
+            api_key=api_key,
+            http_client=httpx.Client() 
+        )
+        self.model = "llama-3.3-70b-versatile"
 
-        except Exception as e:
-            print(f"🌪️ UPLINK FAULT: {e}")
-            time.sleep(300)
+    def execute_hive_protocol(self, vision_data, defense_report):
+        """Orchestrates 80 AI entities as a single Sovereign Hive Mind."""
+        prompt = f"""
+        ACT AS: Sovereign Hive Mind (80-AI Legion).
+        VISION_SCIENCE: {vision_data}
+        DEFENSE_REPORT: {defense_report}
+        
+        UESP-PRCE TASK:
+        1. Analyze stoichiometry & location viability for building/crops/solar.
+        2. Execute Percaphonel defense logic against mammalian signatures.
+        3. Determine 'Best Next Move' for mission sovereignty.
+        """
+        response = self.client.chat.completions.create(
+            messages=[{"role": "user", "content": prompt}],
+            model=self.model,
+            response_format={"type": "json_object"}
+        )
+        return json.loads(response.choices[0].message.content)
 
-if __name__ == "__main__":
-    run_sovereign_mission()
+    def audit_recursive_memory(self):
+        files = glob.glob("logs/snapshots/*.json")
+        return [json.load(open(f)) for f in files[-5:]] if files else []
