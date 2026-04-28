@@ -1,41 +1,40 @@
 import os
 import time
-import uuid
 from core.master_brain import MasterBrain
-from drivers.internal_genius import InternalScholar
+from core.vila_agents import VilaVisualScholar
+from core.planetary_defense import PercaphonelDefense
+from lib.daikokuten import Daikokuten
 
-def run_union_protocol():
-    print("🛰️ ShI UNION INITIALIZED: Groq + AI Hive + Puter Cloud.")
+def run_sovereign_mission():
+    print("🛰️ ShI HIVE ONLINE: VILA Vision & Percaphonel Defense Active.")
     
-    TARGET_ANGLE = 51.8 
-    
-    # Initialize using the GitHub Action Secret
-    api_key = os.getenv("GROQ_SECRET")
-    brain = MasterBrain(api_key=api_key)
-    session_count = 1
+    # Initialization
+    brain = MasterBrain(os.getenv("GROQ_SECRET"))
+    vision_scholar = VilaVisualScholar(nvidia_client=None) # Nvidia-backed VILA
+    defense = PercaphonelDefense()
     
     while True:
-        session_id = f"APEX-{session_count}-{str(uuid.uuid4())[:4]}"
-        scholar = InternalScholar(session_id)
-        
         try:
-            history = brain.audit_recursive_memory()
-            telemetry = {"vibration_hz": 432, "velocity_mach": 18.5}
-            weather = {"condition": "CO2_Snowfall", "wind_speed": 45.0}
+            # 1. Capture & Interpret Vision (VILA Logic)
+            # Simulated image capture
+            v_science = vision_scholar.interpret_vision(image_bytes=None, zoom_level="50x")
             
-            # Execute Sovereign Logic via Groq
-            shi_state = brain.execute_shi_protocol(telemetry, weather, history, TARGET_ANGLE)
-            scholar.archive_sovereign_evolution(shi_state, telemetry)
+            # 2. Defense Assessment
+            p_defense = defense.execute_defense(v_science)
             
-            print(f"🤖 {session_id} | TII: {shi_state['tii_score']}% | Move: {shi_state['best_move']}")
-
-            # Adaptive Pulse Timing
-            time.sleep(60 if shi_state['tii_score'] > 50 else 300)
-            session_count += 1
+            # 3. Hive Mind Processing
+            decision = brain.execute_hive_protocol(v_science, p_defense)
+            
+            # 4. Daikokuten Logistics
+            compressed = Daikokuten.compress_for_logistics(decision)
+            
+            print(f"🤖 HIVE: Viability Solar [{v_science['viability_score']['solar_farming']}] | Defense: {p_defense['action']}")
+            
+            time.sleep(60) # High-frequency scan
 
         except Exception as e:
-            print(f"🌪️ UNION DISRUPTED: {e}. Re-syncing with Cloud...")
+            print(f"🌪️ UPLINK FAULT: {e}")
             time.sleep(300)
 
 if __name__ == "__main__":
-    run_union_protocol()
+    run_sovereign_mission()
